@@ -1,28 +1,28 @@
 #include <iostream>
 
+#include "var.hpp"
 #include "main.hpp"
 
 int main()
 {
-    std::cout << "LBM simulation starter" << std::endl;
+    dfloat *f_in;
+    dfloat *f_out;
+    dfloat *h_fMom;
+    dfloat *rho;
+    dfloat *ux;
+    dfloat *uy;
 
-    std::cout << PI << " " << Nx << ::std::endl;
+    allocate_host_memory(&f_in, &f_out, &h_fMom, &rho, &ux, &uy);
 
-    for (size_t x = 0; x < Nx; x++)
+    for (size_t iter = 0; iter < MAX_ITER; iter++)
     {
-        for (size_t y = 0; y < Ny; y++)
-        {
-            std::cout << x << " " << y << " " << IDX(x, y) << std::endl;
-            for (size_t q = 0; q < Q; q++)
-            {
-                std::cout << x << " " << y << " " << q << " " << FIDX(x, y, q) << " " << MIDX(x, y, q) << std::endl;
-            }
-        }
+        // Domain Initialization
+        initialize_domain(h_fMom);
+
+        // std::cout << h_fMom[MIDX(10, 10, M_RHO_INDEX)] << std::endl;
+
+        free_host_memory(f_in, f_out, h_fMom, rho, ux, uy);
+
+        return 0;
     }
-
-    allocate_host_memory(&f_in, &f_out, &h_fMom, &rho, &ux, &uy, &mxx, &mxy, &myy);
-
-    free_host_memory(f_in, f_out, h_fMom, rho, ux, uy, mxx, mxy, myy);
-
-    return 0;
 }

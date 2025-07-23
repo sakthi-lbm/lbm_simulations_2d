@@ -39,7 +39,7 @@ constexpr int M_MYY_INDEX = 5;
 const size_t NUM_MOMENTS = M_OFFSET + 1;
 
 
-const size_t NUM_NODES = Nx * Ny;
+const size_t NUM_NODES = NX * NY;
 const size_t NUM_NODES_Q = NUM_NODES * Q; 
 const size_t NUM_NODES_MOM = NUM_NODES * NUM_MOMENTS;
 

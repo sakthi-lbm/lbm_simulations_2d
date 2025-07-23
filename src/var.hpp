@@ -17,5 +17,6 @@ typedef float dfloat;
 #include CASE_OUTPUTS
 
 #include "index.hpp"
+#include "definitions.hpp"
 
 #endif

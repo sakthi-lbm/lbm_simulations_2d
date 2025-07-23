@@ -3,9 +3,9 @@
 
 #include "var.hpp"
 
-#define IDX(x, y) (x + y * Nx)
-#define FIDX(x, y, q) ((q * Nx * Ny) + x + (y * Nx))
-#define MIDX(x,y,var) ((var * Nx * Ny) + x + (y * Nx))
+#define IDX(x, y) (x + y * NX)
+#define FIDX(x, y, q) ((q * NX * NY) + x + (y * NX))
+#define MIDX(x,y,var) ((var * NX * NY) + x + (y * NX))
 
 // inline size_t idx(size_t x, size_t y)
 // {
