@@ -1,0 +1,10 @@
+#ifndef SOLVE_MLBM_HPP
+#define SOLVE_MLBM_HPP
+
+#include<iostream>
+
+#include "var.hpp"
+
+void MomCollisionStreaming(dfloat *h_fMom, dfloat *f_in, dfloat *f_out);
+
+#endif

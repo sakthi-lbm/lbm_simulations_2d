@@ -22,3 +22,8 @@ void initialize_moments(dfloat *rho, dfloat *ux, dfloat *uy, dfloat *mxx, dfloat
     *myy = (pop_eq[2] + pop_eq[4] + pop_eq[5] + pop_eq[6] + pop_eq[7] + pop_eq[8]) * inv_rho - cs2;
     *mxy = (pop_eq[5] - pop_eq[6] + pop_eq[7] - pop_eq[8]) * inv_rho;
 }
+
+void initialize_population(dfloat *rho_var, dfloat *ux_var, dfloat *uy_var, dfloat *mxx, dfloat *myy, dfloat *mxy, dfloat *pop)
+{
+    
+}

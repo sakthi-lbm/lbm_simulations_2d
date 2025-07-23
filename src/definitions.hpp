@@ -21,6 +21,11 @@ constexpr dfloat cs2 = 1.0 / 3.0;
 constexpr dfloat cx[Q] = {0, 1, 0, -1, 0, 1, -1, -1, 1};
 constexpr dfloat cy[Q] = {0, 0, 1, 0, -1, 1, 1, -1, -1};
 
+constexpr dfloat F_M_0_SCALE = 1.0;
+constexpr dfloat F_M_I_SCALE = as2;
+constexpr dfloat F_M_II_SCALE = as2 * as2 / 2;
+constexpr dfloat F_M_IJ_SCALE = as2 * as2;
+
 //array index
 constexpr int M_RHO_INDEX = 0;
 constexpr int M_UX_INDEX = 1;

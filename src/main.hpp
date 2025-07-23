@@ -4,6 +4,8 @@
 #include "var.hpp"
 #include "definitions.hpp"
 #include "initialize_lbm.hpp"
+#include "solve_mlbm.hpp"
+#include <cassert>
 
 // Allocate host memory
 inline void allocate_host_memory(
@@ -39,7 +41,7 @@ inline void free_host_memory(
     std::free(uy);
 }
 
-void initialize_domain(dfloat *h_fMom)
+void initialize_domain(dfloat *h_fMom, dfloat *f_in)
 {
     for (size_t x = 0; x < NX; x++)
     {
@@ -54,6 +56,13 @@ void initialize_domain(dfloat *h_fMom)
             h_fMom[MIDX(x, y, M_MXX_INDEX)] = mxx;
             h_fMom[MIDX(x, y, M_MYY_INDEX)] = myy;
             h_fMom[MIDX(x, y, M_MXY_INDEX)] = mxy;
+
+            dfloat pop[Q];
+            pop_reconstruction(rho_var, ux_var, uy_var, mxx, myy, mxy, pop);
+            for (size_t q = 0; q < Q; q++)
+            {
+                f_in[FIDX(x, y, q)] = pop[q];
+            }
         }
     }
 }
