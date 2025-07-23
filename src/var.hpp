@@ -10,7 +10,6 @@ typedef float dfloat;
 #define BC_PROBLEM ldc
 #define CASE_DIRECTORY cases
 #define CASE_CONSTANTS STR(CASE_DIRECTORY/BC_PROBLEM/constants.hpp)
-// #define CASE_BC STR(CASE_DIRECTORY/BC_PROBLEM/boundaries.hpp)
 #define CASE_OUTPUTS STR(CASE_DIRECTORY/BC_PROBLEM/outputs.hpp)
 #define COLREC "colrec/2nd_order/collision_and_reconstruction.hpp"
 
@@ -21,5 +20,8 @@ typedef float dfloat;
 #include "index.hpp"
 #include "definitions.hpp"
 #include COLREC
+#include "nodeTypeMap.hpp"
+
+#define CASE_BOUNDARY STR(CASE_DIRECTORY/BC_PROBLEM/boundaries.hpp)
 
 #endif

@@ -1,5 +1,60 @@
 #include <iostream>
 #include "solve_mlbm.hpp"
+#include "nodeTypeMap.hpp"
+
+#include CASE_BOUNDARY
+
+void calculate_moments(unsigned int nodeType, dfloat *f_in, dfloat *h_fMom)
+{
+
+    for (size_t x = 0; x < NX; x++)
+    {
+        for (size_t y = 0; y < NY; y++)
+        {
+            dfloat rhoVar, uxVar, uyVar;
+            dfloat mxxVar, myyVar, mxyVar;
+            dfloat pop[Q];
+            for (size_t q = 0; q < Q; q++)
+            {
+                pop[q] = f_in[FIDX(x, y, q)];
+            }
+
+            if (nodeType != BULK)
+            {
+                boundary_condition(nodeType, pop, &rhoVar, &uxVar, &uyVar, &mxxVar, &myyVar, &mxyVar);
+            }
+            else
+            {
+                const dfloat pop0 = f_in[FIDX(x, y, 0)];
+                const dfloat pop1 = f_in[FIDX(x, y, 1)];
+                const dfloat pop2 = f_in[FIDX(x, y, 2)];
+                const dfloat pop3 = f_in[FIDX(x, y, 3)];
+                const dfloat pop4 = f_in[FIDX(x, y, 4)];
+                const dfloat pop5 = f_in[FIDX(x, y, 5)];
+                const dfloat pop6 = f_in[FIDX(x, y, 6)];
+                const dfloat pop7 = f_in[FIDX(x, y, 7)];
+                const dfloat pop8 = f_in[FIDX(x, y, 8)];
+
+                rhoVar = pop0 + pop1 + pop2 + pop3 + pop4 + pop5 + pop6 + pop7 + pop8;
+                dfloat invRho = 1.0 / rhoVar;
+
+                uxVar = (pop1 - pop3 + pop5 - pop6 - pop7 + pop8) * invRho;
+                uyVar = (pop2 - pop4 + pop5 + pop6 - pop7 - pop8) * invRho;
+
+                mxxVar = (pop1 + pop3 + pop5 + pop6 + pop7 + pop8) * invRho - cs2;
+                myyVar = (pop2 + pop4 + pop5 + pop6 + pop7 + pop8) * invRho - cs2;
+                mxyVar = (pop5 - pop6 + pop7 - pop8) * invRho;
+
+                h_fMom[MIDX(x, y, M_RHO_INDEX)] = rhoVar - RHO_0;
+                h_fMom[MIDX(x, y, M_UX_INDEX)] = uxVar;
+                h_fMom[MIDX(x, y, M_UY_INDEX)] = uyVar;
+                h_fMom[MIDX(x, y, M_MXX_INDEX)] = mxxVar;
+                h_fMom[MIDX(x, y, M_MYY_INDEX)] = myyVar;
+                h_fMom[MIDX(x, y, M_MXY_INDEX)] = mxyVar;
+            }
+        }
+    }
+}
 
 void MomCollisionStreaming(dfloat *h_fMom, dfloat *f_in, dfloat *f_out)
 {

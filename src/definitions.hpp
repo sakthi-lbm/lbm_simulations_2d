@@ -49,6 +49,7 @@ const size_t NUM_NODES_Q = NUM_NODES * Q;
 const size_t NUM_NODES_MOM = NUM_NODES * NUM_MOMENTS;
 
 const size_t MEM_SIZE_NODES = sizeof(dfloat) * NUM_NODES;
+const size_t MEM_SIZE_NODETYPE = sizeof(unsigned int) * NUM_NODES;
 const size_t MEM_SIZE_NODES_MOM = sizeof(dfloat) * NUM_NODES_MOM;
 const size_t MEM_SIZE_NODES_Q = sizeof(dfloat) * NUM_NODES_Q;
 

@@ -2,10 +2,9 @@
 #define MAIN_HPP
 
 #include "var.hpp"
-#include "definitions.hpp"
 #include "initialize_lbm.hpp"
 #include "solve_mlbm.hpp"
-#include <cassert>
+#include CASE_BOUNDARY
 
 // Allocate host memory
 inline void allocate_host_memory(
@@ -14,7 +13,8 @@ inline void allocate_host_memory(
     dfloat **h_fMom,
     dfloat **rho,
     dfloat **ux,
-    dfloat **uy)
+    dfloat **uy,
+    unsigned int **nodeType)
 {
     *f_in = static_cast<dfloat *>(std::malloc(MEM_SIZE_NODES_Q));
     *f_out = static_cast<dfloat *>(std::malloc(MEM_SIZE_NODES_Q));
@@ -22,6 +22,7 @@ inline void allocate_host_memory(
     *rho = static_cast<dfloat *>(std::malloc(MEM_SIZE_NODES));
     *ux = static_cast<dfloat *>(std::malloc(MEM_SIZE_NODES));
     *uy = static_cast<dfloat *>(std::malloc(MEM_SIZE_NODES));
+    *nodeType = static_cast<unsigned int *>(std::malloc(MEM_SIZE_NODETYPE));
 }
 
 // Free host memory
@@ -31,7 +32,8 @@ inline void free_host_memory(
     dfloat *h_fMom,
     dfloat *rho,
     dfloat *ux,
-    dfloat *uy)
+    dfloat *uy,
+    unsigned int *nodeType)
 {
     std::free(f_in);
     std::free(f_out);
@@ -39,14 +41,17 @@ inline void free_host_memory(
     std::free(rho);
     std::free(ux);
     std::free(uy);
+    std::free(nodeType);
 }
 
-void initialize_domain(dfloat *h_fMom, dfloat *f_in)
+void initialize_domain(unsigned int *nodeType, dfloat *h_fMom, dfloat *f_in)
 {
     for (size_t x = 0; x < NX; x++)
     {
         for (size_t y = 0; y < NY; y++)
         {
+            boundary_definitions(nodeType, x, y);
+
             dfloat rho_var, ux_var, uy_var;
             dfloat mxx, myy, mxy;
             initialize_moments(&rho_var, &ux_var, &uy_var, &mxx, &myy, &mxy);
