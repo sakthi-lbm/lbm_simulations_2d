@@ -3,8 +3,8 @@
 
 #include "../../var.hpp"
 
-#define PATH_FILES = "LDC"
-#define ID_SIM = "re1000"
+#define PATH_FILES "LDC"
+#define ID_SIM "re1000"
 
 constexpr bool RESTART = false;
 constexpr bool POST_PROCESS = true;

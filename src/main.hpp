@@ -4,7 +4,8 @@
 #include "var.hpp"
 #include "initialize_lbm.hpp"
 #include "solve_mlbm.hpp"
-#include CASE_BOUNDARY
+#include "file_utils.hpp"
+#include "save_data.hpp"
 
 // Allocate host memory
 inline void allocate_host_memory(
@@ -44,13 +45,14 @@ inline void free_host_memory(
     std::free(nodeType);
 }
 
-void initialize_domain(unsigned int *nodeType, dfloat *h_fMom, dfloat *f_in)
+inline void initialize_domain(unsigned int *nodeType, dfloat *h_fMom, dfloat *f_in)
 {
     for (size_t x = 0; x < NX; x++)
     {
         for (size_t y = 0; y < NY; y++)
         {
-            boundary_definitions(nodeType, x, y);
+            // boundary_definitions(nodeType, x, y);
+            nodeType[IDX(x, y)] = boundary_definitions(x, y);
 
             dfloat rho_var, ux_var, uy_var;
             dfloat mxx, myy, mxy;

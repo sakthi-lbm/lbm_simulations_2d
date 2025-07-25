@@ -5,8 +5,8 @@ EXECUTABLE = lbm
 SRC = $(wildcard *.cpp)
 
 all:
-	$(CPP_COMPILE) $(FLAGS) $(SRC) -o $(EXECUTABLE)
-	./$(EXECUTABLE)
+	$(CPP_COMPILE) $(FLAGS) $(SRC) -o ./../$(EXECUTABLE)
+	cd ../ && ./$(EXECUTABLE)
 
 clean:
 	rm -f $(EXECUTABLE)

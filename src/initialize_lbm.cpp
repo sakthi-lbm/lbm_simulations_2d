@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include "var.hpp"
 #include "initialize_lbm.hpp"
 
 void initialize_moments(dfloat *rho, dfloat *ux, dfloat *uy, dfloat *mxx, dfloat *myy, dfloat *mxy)

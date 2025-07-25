@@ -6,8 +6,6 @@
 
 
 
-
-
 void initialize_moments(dfloat *rho, dfloat *ux, dfloat *uy, dfloat *mxx, dfloat *myy, dfloat *mxy);
 
 

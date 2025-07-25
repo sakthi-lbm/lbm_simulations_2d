@@ -1,10 +1,7 @@
 #include <iostream>
 #include "solve_mlbm.hpp"
-#include "nodeTypeMap.hpp"
 
-#include CASE_BOUNDARY
-
-void calculate_moments(unsigned int nodeType, dfloat *f_in, dfloat *h_fMom)
+void calculate_moments(unsigned int *nodeType, dfloat *f_in, dfloat *h_fMom)
 {
 
     for (size_t x = 0; x < NX; x++)
@@ -14,14 +11,15 @@ void calculate_moments(unsigned int nodeType, dfloat *f_in, dfloat *h_fMom)
             dfloat rhoVar, uxVar, uyVar;
             dfloat mxxVar, myyVar, mxyVar;
             dfloat pop[Q];
+            const unsigned int node = nodeType[IDX(x, y)];
             for (size_t q = 0; q < Q; q++)
             {
                 pop[q] = f_in[FIDX(x, y, q)];
             }
 
-            if (nodeType != BULK)
+            if (node != BULK)
             {
-                boundary_condition(nodeType, pop, &rhoVar, &uxVar, &uyVar, &mxxVar, &myyVar, &mxyVar);
+                boundary_condition(node, pop, &rhoVar, &uxVar, &uyVar, &mxxVar, &myyVar, &mxyVar);
             }
             else
             {
@@ -63,7 +61,7 @@ void MomCollisionStreaming(dfloat *h_fMom, dfloat *f_in, dfloat *f_out)
         for (size_t y = 0; y < NY; y++)
         {
 
-            dfloat rho_var = h_fMom[MIDX(x, y, M_RHO_INDEX)];
+            dfloat rho_var = RHO_0 + h_fMom[MIDX(x, y, M_RHO_INDEX)];
             dfloat ux_var = h_fMom[MIDX(x, y, M_UX_INDEX)];
             dfloat uy_var = h_fMom[MIDX(x, y, M_UY_INDEX)];
             dfloat mxx = h_fMom[MIDX(x, y, M_MXX_INDEX)];
