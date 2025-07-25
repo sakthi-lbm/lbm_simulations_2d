@@ -8,8 +8,12 @@ void calculate_moments(unsigned int *nodeType, dfloat *f_in, dfloat *h_fMom)
     {
         for (size_t y = 0; y < NY; y++)
         {
-            dfloat rhoVar, uxVar, uyVar;
-            dfloat mxxVar, myyVar, mxyVar;
+            dfloat rhoVar = 0;
+            dfloat uxVar = 0;
+            dfloat uyVar = 0;
+            dfloat mxxVar = 0;
+            dfloat myyVar = 0;
+            dfloat mxyVar = 0;
             dfloat pop[Q];
             const unsigned int node = nodeType[IDX(x, y)];
             for (size_t q = 0; q < Q; q++)
@@ -20,7 +24,16 @@ void calculate_moments(unsigned int *nodeType, dfloat *f_in, dfloat *h_fMom)
             if (node != BULK)
             {
                 boundary_condition(node, pop, &rhoVar, &uxVar, &uyVar, &mxxVar, &myyVar, &mxyVar);
+                h_fMom[MIDX(x, y, M_RHO_INDEX)] = rhoVar - RHO_0;
+                h_fMom[MIDX(x, y, M_UX_INDEX)] = uxVar;
+                h_fMom[MIDX(x, y, M_UY_INDEX)] = uyVar;
+                h_fMom[MIDX(x, y, M_MXX_INDEX)] = mxxVar;
+                h_fMom[MIDX(x, y, M_MYY_INDEX)] = myyVar;
+                h_fMom[MIDX(x, y, M_MXY_INDEX)] = mxyVar;
+
+                // std::cout << x << " " << y << " " << rhoVar << " " << uxVar << " " << uyVar << std::endl;
             }
+
             else
             {
                 const dfloat pop0 = f_in[FIDX(x, y, 0)];
@@ -49,6 +62,8 @@ void calculate_moments(unsigned int *nodeType, dfloat *f_in, dfloat *h_fMom)
                 h_fMom[MIDX(x, y, M_MXX_INDEX)] = mxxVar;
                 h_fMom[MIDX(x, y, M_MYY_INDEX)] = myyVar;
                 h_fMom[MIDX(x, y, M_MXY_INDEX)] = mxyVar;
+
+                // std::cout << x << " " << y << " " << rhoVar << " " << uxVar << " " << uyVar << std::endl;
             }
         }
     }

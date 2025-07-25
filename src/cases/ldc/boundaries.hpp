@@ -8,18 +8,22 @@ inline unsigned int boundary_definitions(const size_t x, const size_t y)
     if (x == 0 && y == 0)
     {
         return SOUTH_WEST;
+        // return SOUTH;
     }
     else if (x == 0 && y == (NY - 1))
     {
         return NORTH_WEST;
+        // return NORTH;
     }
     else if (x == (NX - 1) && y == 0)
     {
         return SOUTH_EAST;
+        // return SOUTH;
     }
     else if (x == (NX - 1) && y == (NY - 1))
     {
         return NORTH_EAST;
+        // return NORTH;
     }
     else if (x == 0)
     {
@@ -53,7 +57,7 @@ inline void boundary_condition(unsigned int nodeType, dfloat (&pop)[Q], dfloat *
         const dfloat inv_rhoI = 1.0 / rhoI;
         const dfloat mxxI = (pop[1] + pop[3] + pop[5] + pop[6]) * inv_rhoI - cs2;
         const dfloat myyI = (pop[2] + pop[5] + pop[6]) * inv_rhoI - cs2;
-        const dfloat mxyI = (pop[5] - pop[6]) * inv_rhoI - cs2;
+        const dfloat mxyI = (pop[5] - pop[6]) * inv_rhoI;
 
         *ux = U0;
         *uy = 0.0;
@@ -72,7 +76,7 @@ inline void boundary_condition(unsigned int nodeType, dfloat (&pop)[Q], dfloat *
         const dfloat inv_rhoI = 1.0 / rhoI;
         const dfloat mxxI = (pop[1] + pop[3] + pop[7] + pop[8]) * inv_rhoI - cs2;
         const dfloat myyI = (pop[4] + pop[7] + pop[8]) * inv_rhoI - cs2;
-        const dfloat mxyI = (pop[7] - pop[8]) * inv_rhoI - cs2;
+        const dfloat mxyI = (pop[7] - pop[8]) * inv_rhoI;
 
         *ux = 0.0;
         *uy = 0.0;
@@ -91,7 +95,7 @@ inline void boundary_condition(unsigned int nodeType, dfloat (&pop)[Q], dfloat *
         const dfloat inv_rhoI = 1.0 / rhoI;
         const dfloat mxxI = (pop[3] + pop[6] + pop[7]) * inv_rhoI - cs2;
         const dfloat myyI = (pop[2] + pop[4] + pop[6] + pop[7]) * inv_rhoI - cs2;
-        const dfloat mxyI = (pop[7] - pop[6]) * inv_rhoI - cs2;
+        const dfloat mxyI = (pop[7] - pop[6]) * inv_rhoI;
 
         *ux = 0.0;
         *uy = 0.0;
@@ -110,7 +114,7 @@ inline void boundary_condition(unsigned int nodeType, dfloat (&pop)[Q], dfloat *
         const dfloat inv_rhoI = 1.0 / rhoI;
         const dfloat mxxI = (pop[1] + pop[5] + pop[8]) * inv_rhoI - cs2;
         const dfloat myyI = (pop[2] + pop[4] + pop[5] + pop[8]) * inv_rhoI - cs2;
-        const dfloat mxyI = (pop[5] - pop[8]) * inv_rhoI - cs2;
+        const dfloat mxyI = (pop[5] - pop[8]) * inv_rhoI;
 
         *ux = 0.0;
         *uy = 0.0;
@@ -129,7 +133,7 @@ inline void boundary_condition(unsigned int nodeType, dfloat (&pop)[Q], dfloat *
         const dfloat inv_rhoI = 1.0 / rhoI;
         const dfloat mxxI = (pop[3] + pop[7]) * inv_rhoI - cs2;
         const dfloat myyI = (pop[4] + pop[7]) * inv_rhoI - cs2;
-        const dfloat mxyI = pop[7] * inv_rhoI - cs2;
+        const dfloat mxyI = pop[7] * inv_rhoI;
 
         *ux = 0.0;
         *uy = 0.0;
@@ -148,12 +152,12 @@ inline void boundary_condition(unsigned int nodeType, dfloat (&pop)[Q], dfloat *
         const dfloat inv_rhoI = 1.0 / rhoI;
         const dfloat mxxI = (pop[1] + pop[8]) * inv_rhoI - cs2;
         const dfloat myyI = (pop[4] + pop[8]) * inv_rhoI - cs2;
-        const dfloat mxyI = -pop[8] * inv_rhoI - cs2;
+        const dfloat mxyI = -pop[8] * inv_rhoI;
 
         *ux = 0.0;
         *uy = 0.0;
 
-        *rhoVar = -12.0 * rhoI * (-3.0 - 3.0 * myyI + 3.0 * (OMEGA - 1.0) * mxxI - 7.0 * (OMEGA - 1.0) * mxyI + 3.0 * OMEGA * myyI) / (16.0 + 9.0 * OMEGA);
+        *rhoVar = -12.0 * rhoI * (-3.0 - 3.0 * myyI + 3.0 * (OMEGA - 1.0) * mxxI + 7.0 * (OMEGA - 1.0) * mxyI + 3.0 * OMEGA * myyI) / (16.0 + 9.0 * OMEGA);
 
         *mxx = 2.0 * (9.0 * rhoI * mxxI + 6.0 * mxyI * rhoI + (*rhoVar)) / (9.0 * (*rhoVar));
         *myy = 2.0 * (6.0 * rhoI * mxyI + 9.0 * myyI * rhoI + (*rhoVar)) / (9.0 * (*rhoVar));
@@ -167,7 +171,7 @@ inline void boundary_condition(unsigned int nodeType, dfloat (&pop)[Q], dfloat *
         const dfloat inv_rhoI = 1.0 / rhoI;
         const dfloat mxxI = (pop[3] + pop[6]) * inv_rhoI - cs2;
         const dfloat myyI = (pop[2] + pop[6]) * inv_rhoI - cs2;
-        const dfloat mxyI = -pop[6] * inv_rhoI - cs2;
+        const dfloat mxyI = -pop[6] * inv_rhoI;
 
         *ux = U0;
         *uy = 0.0;
@@ -186,7 +190,7 @@ inline void boundary_condition(unsigned int nodeType, dfloat (&pop)[Q], dfloat *
         const dfloat inv_rhoI = 1.0 / rhoI;
         const dfloat mxxI = (pop[1] + pop[5]) * inv_rhoI - cs2;
         const dfloat myyI = (pop[2] + pop[5]) * inv_rhoI - cs2;
-        const dfloat mxyI = pop[5] * inv_rhoI - cs2;
+        const dfloat mxyI = pop[5] * inv_rhoI;
 
         *ux = U0;
         *uy = 0.0;

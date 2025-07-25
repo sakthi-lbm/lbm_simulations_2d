@@ -1,3 +1,7 @@
+LDC/
+JET/
+GRID_REFINE/
+CYLINDER/
 *.o
 *.json
 *.lastcodeanalysissucceeded

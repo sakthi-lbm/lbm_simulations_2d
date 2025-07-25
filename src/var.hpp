@@ -1,8 +1,10 @@
 #ifndef VAR_HPP
 #define VAR_HPP
 #include <cmath>
+#include <chrono>
 
 typedef float dfloat;
+typedef std::chrono::high_resolution_clock::time_point timestep;
 
 #define STR_IMPL(x) #x
 #define STR(x) STR_IMPL(x)

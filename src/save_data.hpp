@@ -11,7 +11,7 @@
 
 void write_grid();
 
-void write_solution(dfloat *h_fMom, dfloat *rho, dfloat *ux, dfloat *uy, size_t iter);
+void write_solution(dfloat *h_fMom, size_t iter);
 
 
 

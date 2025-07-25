@@ -25,23 +25,27 @@ void write_grid()
     // Write x and y arrays for each processor (m = 0 to nprocs - 1)
     for (int m = 0; m < nprocs; ++m)
     {
-        for (int j = 0; j < NY; ++j)
-            for (int i = 0; i < NX; ++i)
+        for (size_t x = 0; x < NX; x++)
+        {
+            for (size_t y = 0; y < NY; y++)
             {
-                float val = (double(i)) / (NX - 1); // already float
+                float val = (double(x)) / (NX - 1); // already float
                 gridfile.write(reinterpret_cast<const char *>(&val), sizeof(float));
             }
+        }
 
-        for (int j = 0; j < NY; ++j)
-            for (int i = 0; i < NX; ++i)
+        for (size_t x = 0; x < NX; x++)
+        {
+            for (size_t y = 0; y < NY; y++)
             {
-                float val = (double(j)) / (NY - 1);
+                float val = (double(y)) / (NY - 1);
                 gridfile.write(reinterpret_cast<const char *>(&val), sizeof(float));
             }
+        }
     }
 }
 
-void write_solution(dfloat *h_fMom, dfloat *rho, dfloat *ux, dfloat *uy, size_t iter)
+void write_solution(dfloat *h_fMom, size_t iter)
 {
 
     // Creating master.p3d file
@@ -95,19 +99,7 @@ void write_solution(dfloat *h_fMom, dfloat *rho, dfloat *ux, dfloat *uy, size_t 
     ;
     out.close();
 
-    // Data file
-    for (size_t x = 0; x < NX; x++)
-    {
-        for (size_t y = 0; y < NY; y++)
-        {
-            rho[IDX(x, y)] = RHO_0 + h_fMom[MIDX(x, y, M_RHO_INDEX)];
-            ux[IDX(x, y)] = h_fMom[MIDX(x, y, M_UX_INDEX)];
-            uy[IDX(x, y)] = h_fMom[MIDX(x, y, M_UY_INDEX)];
-        }
-    }
-
     // datafile
-
     std::ostringstream filename_temp;
     int nprocs = 1;
     std::string strInf3 = PATH_FILES;
@@ -143,7 +135,8 @@ void write_solution(dfloat *h_fMom, dfloat *rho, dfloat *ux, dfloat *uy, size_t 
         {
             for (size_t y = 0; y < NY; y++)
             {
-                float val = rho[IDX(x, y)]; // already float
+                float val = RHO_0 + h_fMom[MIDX(x, y, M_RHO_INDEX)];
+                ; // already float
                 datafile.write(reinterpret_cast<const char *>(&val), sizeof(float));
             }
         }
@@ -152,7 +145,7 @@ void write_solution(dfloat *h_fMom, dfloat *rho, dfloat *ux, dfloat *uy, size_t 
         {
             for (size_t y = 0; y < NY; y++)
             {
-                float val = ux[IDX(x, y)];
+                float val = h_fMom[MIDX(x, y, M_UX_INDEX)];
                 datafile.write(reinterpret_cast<const char *>(&val), sizeof(float));
             }
         }
@@ -161,7 +154,7 @@ void write_solution(dfloat *h_fMom, dfloat *rho, dfloat *ux, dfloat *uy, size_t 
         {
             for (size_t y = 0; y < NY; y++)
             {
-                float val = uy[IDX(x, y)];
+                float val = h_fMom[MIDX(x, y, M_UY_INDEX)];
                 datafile.write(reinterpret_cast<const char *>(&val), sizeof(float));
             }
         }
