@@ -23,6 +23,7 @@ constexpr int MAX_ITER  = 100000;
 constexpr int MACR_SAVE = 10000;
 constexpr int RESTART_SAVE = 10000;
 
+// #define WITH_CORNERS
 
 
 

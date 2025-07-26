@@ -7,23 +7,35 @@ inline unsigned int boundary_definitions(const size_t x, const size_t y)
 {
     if (x == 0 && y == 0)
     {
+#ifdef WITH_CORNERS
         return SOUTH_WEST;
-        // return SOUTH;
+#else
+        return SOUTH;
+#endif
     }
     else if (x == 0 && y == (NY - 1))
     {
+#ifdef WITH_CORNERS
         return NORTH_WEST;
-        // return NORTH;
+#else
+        return NORTH;
+#endif
     }
     else if (x == (NX - 1) && y == 0)
     {
+#ifdef WITH_CORNERS
         return SOUTH_EAST;
-        // return SOUTH;
+#else
+        return SOUTH;
+#endif
     }
     else if (x == (NX - 1) && y == (NY - 1))
     {
+#ifdef WITH_CORNERS
         return NORTH_EAST;
-        // return NORTH;
+#else
+        return NORTH;
+#endif
     }
     else if (x == 0)
     {
