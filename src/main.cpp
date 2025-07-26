@@ -5,28 +5,26 @@
 int main()
 {
     create_output_directory();
-    dfloat *f_in;
-    dfloat *f_out;
-    dfloat *h_fMom;
-    unsigned int *nodeType;
+    
+    nodeVar h_fMom;
 
     timestep sim_start_time = std::chrono::high_resolution_clock::now();
     timestep start_time = std::chrono::high_resolution_clock::now();
     timestep end_time;
     dfloat mlups;
 
-    allocate_host_memory(&f_in, &f_out, &h_fMom, &nodeType);
+    allocate_host_memory(h_fMom);
 
     // Domain Initialization: Moments and population
-    initialize_domain(nodeType, h_fMom, f_in);
+    initialize_domain(h_fMom);
     write_grid();
 
     for (size_t iter = 0; iter <= MAX_ITER; iter++)
     {
-        calculate_moments(nodeType, f_in, h_fMom);
+        calculate_moments(h_fMom);
         //  std::cout << iter << " " << h_fMom[MIDX(1,NX-1,M_UX_INDEX)] << std::endl;
 
-        MomCollisionStreaming(h_fMom, f_in, f_out);
+        MomCollisionStreaming(h_fMom);
         // std::cout << iter << " " << f_in[FIDX(5, 5, 8)] << std::endl;
 
         if (iter % MACR_SAVE == 0)
@@ -39,6 +37,6 @@ int main()
     }
     calculate_mlups(sim_start_time, end_time, MAX_ITER, mlups);
     std::cout << "GLOBAL MLUPS: " << mlups << std::endl;
-    free_host_memory(f_in, f_out, h_fMom, nodeType);
+    free_host_memory(h_fMom);
     return 0;
 }

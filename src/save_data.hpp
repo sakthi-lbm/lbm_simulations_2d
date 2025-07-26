@@ -8,10 +8,11 @@
 #include <iomanip>  // std::setprecision
 
 #include "var.hpp"
+#include "global_struct.hpp"
 
 void write_grid();
 
-void write_solution(dfloat *h_fMom, size_t iter);
+void write_solution(nodeVar h_fMom, size_t iter);
 
 
 

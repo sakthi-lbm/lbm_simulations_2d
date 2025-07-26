@@ -26,32 +26,11 @@ constexpr dfloat F_M_I_SCALE = as2;
 constexpr dfloat F_M_II_SCALE = as2 * as2 / 2;
 constexpr dfloat F_M_IJ_SCALE = as2 * as2;
 
-//array index
-constexpr int M_RHO_INDEX = 0;
-constexpr int M_UX_INDEX = 1;
-constexpr int M_UY_INDEX = 2;
-constexpr int M_MXX_INDEX = 3;
-constexpr int M_MXY_INDEX = 4;
-constexpr int M_MYY_INDEX = 5;
-
-#ifdef M_OFFSET
-#undef M_OFFSET
-
-#endif
-
-#define M_OFFSET M_MYY_INDEX
-
-const size_t NUM_MOMENTS = M_OFFSET + 1;
-
-
 const size_t NUM_NODES = NX * NY;
-const size_t NUM_NODES_Q = NUM_NODES * Q; 
-const size_t NUM_NODES_MOM = NUM_NODES * NUM_MOMENTS;
+const size_t NUM_NODES_Q = NUM_NODES * Q;
 
 const size_t MEM_SIZE_NODES = sizeof(dfloat) * NUM_NODES;
 const size_t MEM_SIZE_NODETYPE = sizeof(unsigned int) * NUM_NODES;
-const size_t MEM_SIZE_NODES_MOM = sizeof(dfloat) * NUM_NODES_MOM;
 const size_t MEM_SIZE_NODES_Q = sizeof(dfloat) * NUM_NODES_Q;
-
 
 #endif

@@ -1,5 +1,6 @@
 #include "save_data.hpp"
 
+
 void write_grid()
 {
     // writing grid.x file
@@ -45,7 +46,7 @@ void write_grid()
     }
 }
 
-void write_solution(dfloat *h_fMom, size_t iter)
+void write_solution(nodeVar h_fMom, size_t iter)
 {
 
     // Creating master.p3d file
@@ -135,7 +136,7 @@ void write_solution(dfloat *h_fMom, size_t iter)
         {
             for (size_t y = 0; y < NY; y++)
             {
-                float val = RHO_0 + h_fMom[MIDX(x, y, M_RHO_INDEX)];
+                float val = RHO_0 + h_fMom.rho[IDX(x, y)];
                 ; // already float
                 datafile.write(reinterpret_cast<const char *>(&val), sizeof(float));
             }
@@ -145,7 +146,7 @@ void write_solution(dfloat *h_fMom, size_t iter)
         {
             for (size_t y = 0; y < NY; y++)
             {
-                float val = h_fMom[MIDX(x, y, M_UX_INDEX)];
+                float val = h_fMom.ux[IDX(x, y)];
                 datafile.write(reinterpret_cast<const char *>(&val), sizeof(float));
             }
         }
@@ -154,7 +155,7 @@ void write_solution(dfloat *h_fMom, size_t iter)
         {
             for (size_t y = 0; y < NY; y++)
             {
-                float val = h_fMom[MIDX(x, y, M_UY_INDEX)];
+                float val = h_fMom.uy[IDX(x, y)];
                 datafile.write(reinterpret_cast<const char *>(&val), sizeof(float));
             }
         }
