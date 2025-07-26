@@ -2,6 +2,8 @@ LDC/
 JET/
 GRID_REFINE/
 CYLINDER/
+lbm
+*.out
 *.o
 *.json
 *.lastcodeanalysissucceeded
